@@ -1,0 +1,5 @@
+option solver cplex;
+
+solve;
+display x;
+display z;
