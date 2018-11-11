@@ -1,0 +1,40 @@
+#----------------------------------------
+# File: mymodel.dat (Wyndor_Glass_Co_linear_constraints)
+#----------------------------------------
+let n := 4; # Number of variables
+let m := 4; # Number of inequality constraints
+
+let c[1] := 9; # Objective function coefficients
+let c[2] := 5; # Objective function coefficients
+let c[3] := 6; # Objective function coefficients
+let c[4] := 4; # Objective function coefficients
+
+display c;
+
+let a[1,1]:= 6; # Inequality constraint coefficients
+let a[2,1]:= -1; 
+let a[3,1]:= 0; 
+let a[4,1]:= 1; 
+let a[1,2]:= 3; 
+let a[2,2]:= 0;  
+let a[3,2]:= -1; # Inequality constraint coefficients
+let a[4,2]:= 1; 
+let a[1,3]:= 5; 
+let a[2,3]:= 1; 
+let a[3,3]:= 0; 
+let a[4,3]:= 0;  
+let a[1,4]:= 2; 
+let a[2,4]:= 0; 
+let a[3,4]:= 1; 
+let a[4,4]:= 0; 
+
+
+display a;
+
+let b[1] := 10; # Right-hand side inequality constraint
+let b[2] := 0;
+let b[3] := 0;
+let b[4] := 2;
+
+display b;
+

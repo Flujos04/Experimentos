@@ -1,0 +1,11 @@
+#----------------------------------------
+# File: run.txt (Wyndor_Glass_Co_linear_constraints)
+# NEOS Server: http://www.neos-server.org/neos/solvers
+#----------------------------------------
+option solver cplex; # for solver gurobi (remember to modify the path)
+## ------ You can use other solvers ----- ##
+#option solver ’../../ampl_macosx64/minos’;
+#option solver ’../../ampl_macosx64/snopt’;
+solve;
+display x;
+display z;
