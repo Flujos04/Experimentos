@@ -1,6 +1,6 @@
 function [A]=cell_area(Nx,Ny,x,y)
 
-A=zeros(Nx-1,Ny-1);
+A=zeros(Ny-1,Nx-1);
 
 for i=1:(Nx-1)
     for j=1:(Ny-1)       
