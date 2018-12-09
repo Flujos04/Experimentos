@@ -9,3 +9,6 @@ Ny=100;
 [x_center,y_center]=cell_center(Nx,Ny,x,y);
 
 [A]=cell_area(Nx,Ny,x,y);
+
+plot(x_center,y_center,'.')
+hold off;
