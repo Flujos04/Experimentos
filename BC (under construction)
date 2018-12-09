@@ -1,0 +1,21 @@
+%%%%%%%%%%%%%%% WEST BOUNDARY %%%%%%%%%%%%%%%
+
+p_w=101300; %Pa
+T_w=288; %K
+v_w=0;
+gamma=1.4;
+R=287;
+cp=1.005;
+M_inf=0.1; %Upstream Mach
+T_w_s=T_w*(1 + ((gamma-1)/2)*M_inf^2); %Stagnation T in K
+p_w_s=p_w*(1 + ((gamma-1)/2)*M_inf^2)^(gamma/(gamma-1)); %Stagnation p in Pa
+rho_w=p_w/(R*T_w); %kg/m^3
+rho_w_s=rho_w*(p_w/p_w_s)^(gamma); %Stagnation density in kg/m^3
+a=sqrt(R*T_w_s*gamma);
+u_w=M_inf*a;
+H=cp*T_w_s;
+E=H-(p_w_s/rho_w_s);
+
+U_w=[rho_w_s rho_w_s*u_w rho_w_s*v_w rho_w_s*E]';
+f_w=[rho_w_s*u_w (rho_w_s*u_w^2)+p_w_s rho_w_s*u_w*v_w rho_w_s*u_w*H]';
+g_w=[rho_w_s*v_w rho_w_s*u_w*v_w (rho_w_s*v_w^2)+p_w_s rho_w_s*v_w*H]';
