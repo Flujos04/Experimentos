@@ -19,6 +19,6 @@ for i=1:Ny
     
    xmatrix(i,:)=x; 
 end
-
+figure;hold on;
 surf(xmatrix,y,xmatrix.*0);
 end

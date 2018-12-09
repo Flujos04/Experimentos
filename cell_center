@@ -1,7 +1,7 @@
 function [x_center,y_center]=cell_center(Nx,Ny,x,y)
 
-x_center=zeros(Nx-1,Ny-1);
-y_center=zeros(Nx-1,Ny-1);
+x_center=zeros(Ny-1,Nx-1);
+y_center=zeros(Ny-1,Nx-1);
 
 
 for i=1:(Nx-1)
