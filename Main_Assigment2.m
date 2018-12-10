@@ -46,9 +46,12 @@ E=zeros(Ny-1,Nx-1);
 
 %Initial conditions (Not counting the boundaries)
 
-rho0=rho*rho_w;
-T0=T*T_w;
-u0=u*u_w;
-v0=v*v_q;
-E0=R/(gamma-1)*T0 + (u0^2 + v0^2)/2;
+rho(:,:)=rho_w;
+p(:,:)=p_w;
+T(:,:)=T_w;
+u(:,:)=u_w;
+v(:,:)=v_w;
+E(:,:)=R/(gamma-1)*T + (u.^2 + v.^2)/2;
 
+U=[rho rho.*u rho.*v rho.*E]';
+ntstep=10;
