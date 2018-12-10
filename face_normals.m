@@ -21,11 +21,11 @@ for i=1:(Nx-1)
         Ny_E(j,i)=-(x(i+1)-x(i+1));
         
         %South
-        Nx_S(j,i)=y(j,i+1)-y(i,j);
+        Nx_S(j,i)=y(j,i+1)-y(j,i);
         Ny_S(j,i)=-(x(i+1)-x(i));
         
         %West
-        Nx_W(j,i)=y(i,j)-y(j+1,i);
+        Nx_W(j,i)=y(j,i)-y(j+1,i);
         Ny_W(j,i)=-(x(i)-x(i));
     end
 end
