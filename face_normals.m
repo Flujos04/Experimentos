@@ -1,30 +1,31 @@
-function [dS]=face_normals(Nx,Ny,x,y)
+function [Nx_N,Ny_N,Nx_E,Ny_E,Nx_S,Ny_S,Nx_W,Ny_W]=face_normals(Nx,Ny,x,y)
 
-dS=cell(Nx-1,Ny-1);
-
-for i=1:(Nx-1)
-    for j=1:(Ny-1)
-        dS{i,j}=zeros(4,2);
-    end
-end
+Nx_N = zeros(Ny-1,Nx-1);
+Ny_N = zeros(Ny-1,Nx-1);
+Nx_E = zeros(Ny-1,Nx-1);
+Ny_E = zeros(Ny-1,Nx-1);
+Nx_S = zeros(Ny-1,Nx-1);
+Ny_S = zeros(Ny-1,Nx-1);
+Nx_W = zeros(Ny-1,Nx-1);
+Ny_W = zeros(Ny-1,Nx-1);
 
 for i=1:(Nx-1)
     for j=1:(Ny-1)
         
         %North
-        dS{i,j}(1,1)=y(j+1,i)-y(j+1,i+1);
-        dS{i,j}(1,2)=-(x(i)-x(i+1));
+        Nx_N(j,i)=y(j+1,i)-y(j+1,i+1);
+        Ny_N(j,i)=-(x(i)-x(i+1));
         
         %East
-        dS{i,j}(2,1)=y(j+1,i+1)-y(j,i+1);
-        dS{i,j}(2,2)=-(x(i+1)-x(i+1));
+        Nx_E(j,i)=y(j+1,i+1)-y(j,i+1);
+        Ny_E(j,i)=-(x(i+1)-x(i+1));
         
         %South
-        dS{i,j}(3,1)=y(j,i+1)-y(i,j);
-        dS{i,j}(3,2)=-(x(i+1)-x(i));
+        Nx_S(j,i)=y(j,i+1)-y(i,j);
+        Ny_S(j,i)=-(x(i+1)-x(i));
         
         %West
-        dS{i,j}(4,1)=y(i,j)-y(j+1,i);
-        dS{i,j}(4,2)=-(x(i)-x(i));
+        Nx_W(j,i)=y(i,j)-y(j+1,i);
+        Ny_W(j,i)=-(x(i)-x(i));
     end
 end
