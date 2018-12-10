@@ -1,8 +1,9 @@
 clc;clear;close all
 
 L=1;
-Nx=100;
-Ny=100;
+n_cellsbump=100;
+Nx=3*n_cellsbump+1;
+Ny=60;
 
 [x,y,y0]=mesher(L,Nx,Ny); %mesh
 
