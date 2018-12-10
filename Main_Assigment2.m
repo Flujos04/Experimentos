@@ -44,7 +44,7 @@ v=zeros(Ny-1,Nx-1);
 E=zeros(Ny-1,Nx-1);
 
 
-%Initial conditions
+%Initial conditions (Not counting the boundaries)
 
 rho0=rho*rho_w;
 T0=T*T_w;
