@@ -14,7 +14,7 @@ hold off;
 
 [A]=cell_area(Nx,Ny,x,y); %cell area (2D)
 
-[dS]=face_normals(Nx,Ny,x,y); %face normals
+[Nx_N,Ny_N,Nx_E,Ny_E,Nx_S,Ny_S,Nx_W,Ny_W]=face_normals(Nx,Ny,x,y) %face normals
 
 %% ENVIRONMENTAL PARAMETERS %%
 
