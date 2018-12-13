@@ -1,18 +1,9 @@
-function [D1, D2, D3, D4] = artificial_dissipation (k4,k2,u,v,gamma,P,rho,y0,x,Nx,Ny,Ly)
+function [D1, D2, D3, D4] = artificial_dissipation (k4,k2,u,v,gamma,P,rho,Nx,Ny,X,Y)
 
 U1 = rho;                      
 U2 = rho.*u;
 U3 = rho.*v;
 % U4 = rho.*E;
-
-Y = zeros(Ny,Nx);
-X = zeros(Ny,Nx);
-
-for i = 1:Nx
-    Y(:,i) = linspace(y0(i),Ly,Ny); % Ly is the height of the channel
-% y0 is lower boundary coordinate, containing the equation of the bump
-    X(:,i) = x(i); % X discretization
-end
 
 %  Definition of cell normals and geometry
 dSy_east = Zeros; dSx_east = Zeros;
