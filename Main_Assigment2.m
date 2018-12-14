@@ -40,8 +40,7 @@ rho_w_s=rho_wups(p_w/p_w_s)^(gamma);                       %Upstream stagnation 
 E=R/(gamma-1)*T_ups + (u_w^2 + v_w^2)/2;
 H=E + p_w/rho_ups;
 
-%Prealocating variables (Not counting the boundaries)
-
+%Prealocating variables
 rho=zeros(Ny-1,Nx-1);
 p=zeros(Ny-1,Nx-1);
 T=zeros(Ny-1,Nx-1);
@@ -50,7 +49,7 @@ v=zeros(Ny-1,Nx-1);
 E=zeros(Ny-1,Nx-1);
 
 
-%Initial conditions (Not counting the boundaries)
+%Initial conditions
 
 rho(:,:)=rho_w;
 p(:,:)=p_w;
