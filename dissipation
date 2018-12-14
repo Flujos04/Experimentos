@@ -1,9 +1,6 @@
-function [D1, D2, D3, D4] = artificial_dissipation (k4,k2,u,v,gamma,P,rho,Nx,Ny,X,Y)
+function [D,D_north,D_west,D_east,D_south] = artificial_dissipation (k4,k2,u,v,gamma,P,rho,Nx,Ny,X,Y)
 
-U1 = rho;                      
-U2 = rho.*u;
-U3 = rho.*v;
-% U4 = rho.*E;
+
 
 %  Definition of cell normals and geometry
 dSy_east = Zeros; dSx_east = Zeros;
@@ -98,38 +95,23 @@ end
 %Artificial Dissipation term for North and South faces
 for j = 1:Ny-2
     for i = 1:Nx-1        
-        D1_north(j,i) = gamma_north(j,i)*(U1(j+1,i)-U1(j,i))+eta_north(j,i)*(U1(j+1,i)-U1(j,i));
-        D2_north(j,i) = gamma_north(j,i)*(U2(j+1,i)-U2(j,i))+eta_north(j,i)*(U2(j+1,i)-U2(j,i));
-        D3_north(j,i) = gamma_north(j,i)*(U3(j+1,i)-U3(j,i))+eta_north(j,i)*(U3(j+1,i)-U3(j,i));
-        D4_north(j,i) = gamma_north(j,i)*(U4(j+1,i)-U4(j,i))+eta_north(j,i)*(U4(j+1,i)-U4(j,i));
-        D1_south(j+1,i) = gamma_south(j,i)*(U1(j+1,i)-U1(j,i))+eta_south(j,i)*(U1(j+1,i)-U1(j,i));
-        D2_south(j+1,i) = gamma_south(j,i)*(U2(j+1,i)-U2(j,i))+eta_south(j,i)*(U2(j+1,i)-U2(j,i));
-        D3_south(j+1,i) = gamma_south(j,i)*(U3(j+1,i)-U3(j,i))+eta_south(j,i)*(U3(j+1,i)-U3(j,i));
-        D4_south(j+1,i) = gamma_south(j,i)*(U4(j+1,i)-U4(j,i))+eta_south(j,i)*(U4(j+1,i)-U4(j,i));    
+        D_north(j,i,:) = gamma_north(j,i)*(U(j+1,i,:)-U(j,i,:))+eta_north(j,i)*(U(j+1,i,:)-U(j,i,:));
+        D_south(j+1,i,:) = gamma_south(j,i)*(U(j+1,i,:)-U(j,i,:))+eta_south(j,i)*(U(j+1,i,:)-U(j,i,:));
     end
 end
 
 %Artificial Dissipation term for East and West faces
 for j = 1:Ny-1
     for i = 1:Nx-2       
-        D1_east(j,i) = gamma_east(j,i)*(U1(j,i+1)-U1(j,i))+eta_east(j,i)*(U1(j,i+1)-U1(j,i));
-        D2_east(j,i) = gamma_east(j,i)*(U2(j,i+1)-U2(j,i))+eta_east(j,i)*(U2(j,i+1)-U2(j,i));
-        D3_east(j,i) = gamma_east(j,i)*(U3(j,i+1)-U3(j,i))+eta_east(j,i)*(U3(j,i+1)-U3(j,i));
-        D4_east(j,i) = gamma_east(j,i)*(U4(j,i+1)-U4(j,i))+eta_east(j,i)*(U4(j,i+1)-U4(j,i));
-        D1_west(j,i+1) = gamma_west(j,i)*(U1(j,i+1)-U1(j,i))+eta_west(j,i)*(U1(j,i+1)-U1(j,i));
-        D2_west(j,i+1) = gamma_west(j,i)*(U2(j,i+1)-U2(j,i))+eta_west(j,i)*(U2(j,i+1)-U2(j,i));
-        D3_west(j,i+1) = gamma_west(j,i)*(U3(j,i+1)-U3(j,i))+eta_west(j,i)*(U3(j,i+1)-U3(j,i));
-        D4_west(j,i+1) = gamma_west(j,i)*(U4(j,i+1)-U4(j,i))+eta_west(j,i)*(U4(j,i+1)-U4(j,i));      
+        D_east(j,i,:) = gamma_east(j,i)*(U(j,i+1,:)-U(j,i,:))+eta_east(j,i)*(U(j,i+1,:)-U(j,i,:));
+        D_west(j,i+1,:) = gamma_west(j,i)*(U(j,i+1,:)-U(j,i,:))+eta_west(j,i)*(U(j,i+1,:)-U(j,i,:));
     end
 end
 
 %Total artificial dissipation for a cell
 for j = 1:Ny-1
     for i = 1:Nx-1        
-        D1(j,i) = D1_north(j,i)+D1_south(j,i)+D1_east(j,i)+D1_west(j,i);
-        D2(j,i) = D2_north(j,i)+D2_south(j,i)+D2_east(j,i)+D2_west(j,i);
-        D3(j,i) = D3_north(j,i)+D3_south(j,i)+D3_east(j,i)+D3_west(j,i);
-        D4(j,i) = D4_north(j,i)+D4_south(j,i)+D4_east(j,i)+D4_west(j,i);        
+        D(j,i,:) = D_north(j,i,:)+D_south(j,i,:)+D_east(j,i,:)+D_west(j,i,:);
     end
 end
 end
