@@ -1,4 +1,4 @@
-function [Rij,FN,FE,FS,FW,f,g]=giveRij(U,H,p,T,rho,v,p_w,T_w,gamma,R,M_inf,rho_inf,a,u_w,v_w,p0,rho0,Nx_E,Ny_E,Nx_W,Nx_S,Ny_W,Ny_S,Nx_N,Ny_N,Ny,Nx,CFL,k2,k4,cp,cv,T_w_s,p_w_s,rho_w_s)
+function [Rij,FN,FE,FS,FW,f,g]=giveRij(U,H,p,T,rho,v,p_w,T_w,gamma,R,M_inf,rho_inf,a,u_w,v_w,Nx_E,Ny_E,Nx_W,Nx_S,Ny_W,Ny_S,Nx_N,Ny_N,Ny,Nx,CFL,k2,k4,cp,cv,T_w_s,p_w_s,rho_w_s)
 
 %%%%% WEST CONDITIONS %%%%%
 
