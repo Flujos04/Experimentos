@@ -1,12 +1,11 @@
 function [D,D_north,D_west,D_east,D_south] = artificial_dissipation (k4,k2,u,v,gamma,P,rho,Nx,Ny,X,Y)
-
-
+function [D,D_north,D_west,D_east,D_south] = artificial_dissipation_v2 (U,k4,k2,u,v,gamma,P,rho,Nx,Ny,X,Y)
 
 %  Definition of cell normals and geometry
-dSy_east = Zeros; dSx_east = Zeros;
-dSy_west = Zeros; dSx_west = Zeros;
-dSy_north = Zeros; dSx_north = Zeros;
-dSy_south = Zeros; dSx_south = Zeros;
+dSy_east = zeros(Ny-1,Nx-1); dSx_east = zeros(Ny-1,Nx-1);
+dSy_west = zeros(Ny-1,Nx-1); dSx_west = zeros(Ny-1,Nx-1);
+dSy_north = zeros(Ny-1,Nx-1); dSx_north = zeros(Ny-1,Nx-1);
+dSy_south = zeros(Ny-1,Nx-1); dSx_south = zeros(Ny-1,Nx-1);
 
 for j = 1:Ny-1
     for i = 1:Nx-1
@@ -32,7 +31,8 @@ for j = 1:Ny-1
         gamma_west(j,i+1) = 0.5*k4*(u(j,i+1)*dSy_west(j,i+1)+v(j,i+1)*dSx_west(j,i+1)+c_west*norm_west);       
     end
 end
-
+        gamma_east(:,i+1) = 0.5*k4*(u(:,i+1).*dSy_east(:,i+1)+v(:,i+1).*dSx_east(:,i+1)+c_east*norm_east);
+        
 %Loop to create the gamma artificial dissipation term for the G vertical flux
 for j = 1:Ny-2
     for i = 1:Nx-1
@@ -44,44 +44,52 @@ for j = 1:Ny-2
         gamma_south(j+1,i) = 0.5*k4*(u(j+1,i)*dSy_south(j+1,i)+v(j+1,i)*dSx_south(j+1,i)+c_south*norm_south);        
     end
 end
-
+        gamma_north(j+1,:) = 0.5*k4*(u(j+1,:).*dSy_north(j+1,:)+v(j+1,:).*dSx_north(j+1,:)+c_north*norm_north);
+        
 %Pressure gradients
 for j = 1:Ny-1
-    for i = 1:Nx-3        
+    for i = 1:Nx-3       
         Nux(j,i+1) = abs((P(j,i+2)+P(j,i)-2*P(j,i+1))/(P(j,i+2)+P(j,i)+2*P(j,i+1)));        
     end
 end
-
+        Nux(:,1) = Nux(:,2); 
+        Nux(:,i+2) = Nux(:,i+1);
+        
 for j = 1:Ny-3
     for i = 1:Nx-1        
         Nuy(j+1,i) = abs((P(j+2,i)+P(j,i)-2*P(j+1,i))/(P(j+2,i)+P(j,i)+2*P(j+1,i)));        
     end
 end
-
+        Nuy(1,:) = Nuy(2,:);
+        Nuy(j+2,:) = Nuy(j+1,:);
+        
 %Loop to create the eta artificial dissipation term for the F horizontal flux
 for j = 1:Ny-1
-    for i = 2:Nx-3
+    for i = 2:Nx-2
         c_east = sqrt(gamma*P(j,i)/rho(j,i));
         norm_east = sqrt(dSy_east(j,i)^2+dSx_east(j,i)^2);
         c_west = sqrt(gamma*P(j,i+1)/rho(j,i+1));
         norm_west = sqrt(dSy_west(j,i+1)^2+dSx_west(j,i+1)^2);
-        eta_east(j,i) = 0.5*k2*(u(j,i)*dSy_east(j,i)+v(j,i)*dSx_east(j,i)+c_east*norm_east)*max([Nux(j,i+1),Nux(j,i),Nux(j,i-1),Nux(j,i+2)]);
-        eta_west(j,i+1) = 0.5*k2*(u(j,i+1)*dSy_west(j,i+1)+v(j,i+1)*dSx_west(j,i+1)+c_west*norm_west)*max([Nux(j,i+1),Nux(j,i),Nux(j,i-1),Nux(j,i+2)]);        
+        eta_east(j,i) = 0.5*k2*(u(j,i)*dSy_east(j,i)+v(j,i)*dSx_east(j,i)+c_east*norm_east)*max([Nux(j,i+1),Nux(j,i),Nux(j,i-1)]);
+        eta_west(j,i+1) = 0.5*k2*(u(j,i+1)*dSy_west(j,i+1)+v(j,i+1)*dSx_west(j,i+1)+c_west*norm_west)*max([Nux(j,i+1),Nux(j,i),Nux(j,i-1)]);        
     end
 end
-
+        eta_east(:,1) = eta_east(:,2);
+        eta_east(:,i+1) = eta_east(:,i);
+        
 %Loop to create the eta artificial dissipation term for the G vertical flux
-for j = 2:Ny-3
+for j = 2:Ny-2
     for i = 1:Nx-1
         c_north = sqrt(gamma*P(j,i)/rho(j,i));
         norm_north = sqrt(dSy_north(j,i)^2+dSx_north(j,i)^2);
         c_south = sqrt(gamma*P(j+1,i)/rho(j+1,i));
         norm_south = sqrt(dSy_south(j+1,i)^2+dSx_south(j+1,i)^2);
-        eta_north(j,i) = 0.5*k2*(u(j,i)*dSy_north(j,i)+v(j,i)*dSx_north(j,i)+c_north*norm_north)*max([Nuy(j+1,i),Nuy(j,i),Nuy(j-1,i),Nuy(j+2,i)]);
-        eta_south(j+1,i) = 0.5*k2*(u(j+1,i)*dSy_south(j+1,i)+v(j+1,i)*dSx_south(j+1,i)+c_south*norm_south)*max([Nuy(j+1,i),Nuy(j,i),Nuy(j-1,i),Nuy(j+2,i)]);        
+        eta_north(j,i) = 0.5*k2*(u(j,i)*dSy_north(j,i)+v(j,i)*dSx_north(j,i)+c_north*norm_north)*max([Nuy(j+1,i),Nuy(j,i),Nuy(j-1,i)]);
+        eta_south(j+1,i) = 0.5*k2*(u(j+1,i)*dSy_south(j+1,i)+v(j+1,i)*dSx_south(j+1,i)+c_south*norm_south)*max([Nuy(j+1,i),Nuy(j,i),Nuy(j-1,i)]);        
     end
 end
-
+        eta_north(1,:) = eta_north(2,:);
+        eta_north(j+1,:) = eta_north(j,:);
 
 for j = 1:Ny-1
     for i = 1:Nx-1        
@@ -99,7 +107,8 @@ for j = 1:Ny-2
         D_south(j+1,i,:) = gamma_south(j,i)*(U(j+1,i,:)-U(j,i,:))+eta_south(j,i)*(U(j+1,i,:)-U(j,i,:));
     end
 end
-
+        D_north(j+1,:,:) = gamma_north(j+1,:).*(U(j+1,:,:)-U(j,:,:))+eta_north(j+1,:).*(U(j+1,:,:)-U(j,:,:));
+        
 %Artificial Dissipation term for East and West faces
 for j = 1:Ny-1
     for i = 1:Nx-2       
@@ -107,7 +116,8 @@ for j = 1:Ny-1
         D_west(j,i+1,:) = gamma_west(j,i)*(U(j,i+1,:)-U(j,i,:))+eta_west(j,i)*(U(j,i+1,:)-U(j,i,:));
     end
 end
-
+        D_east(:,i+1,:) = gamma_east(:,i+1).*(U(:,i+1,:)-U(:,i,:))+eta_east(:,i+1).*(U(:,i+1,:)-U(:,i,:));
+        
 %Total artificial dissipation for a cell
 for j = 1:Ny-1
     for i = 1:Nx-1        
