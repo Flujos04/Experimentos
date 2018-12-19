@@ -26,12 +26,12 @@ v_ups=0;               %Upstream vertical velocity
 gamma=1.4;
 R=287;
 M_inf=0.1;           %Upstream Mach
-a=sqrt(gamma*T_w*R); %Upstream speed of sound
+a=sqrt(gamma*T_ups*R); %Upstream speed of sound
 u_ups=a*M_inf; %Upstream horizontal velocity
 %u_w=u_ups;
 %v_w=0;
-cp=R/(gamma-1);
-cv=R*gamma/(gamma-1);
+cv=R/(gamma-1);
+cp=R*gamma/(gamma-1);
 
 T_ups_s=T_ups*(1 + ((gamma-1)/2)*M_inf^2);                   %Upstream stagnation T in K
 p_ups_s=p_ups*(1 + ((gamma-1)/2)*M_inf^2)^(gamma/(gamma-1)); %Upstream stagnation p in Pa
