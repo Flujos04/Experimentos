@@ -31,15 +31,15 @@ for i=2:(Nx-2)
         g(j,1,4)=rho_w*v_w*H_w;
         
         %%%%% EAST CELLS %%%%%
-        f(j,1,1)=rho_e*u_e;
-        f(j,1,2)=rho_e*u_e^2+p_e;
-        f(j,1,3)=rho_e*u_e*v_e;
-        f(j,1,4)=rho_e*u_e*H_e;
+        f(j,1,1)=rho_e(j)*u_e(j);
+        f(j,1,2)=rho_e(j)*u_e(j)^2+p_e;
+        f(j,1,3)=rho_e(j)*u_e(j)*v_e(j);
+        f(j,1,4)=rho_e(j)*u_e(j)*H_e(j);
         
-        g(j,1,1)=rho_e*v_e;
-        g(j,1,2)=rho_e*u_e*v_e;
-        g(j,1,3)=rho_e*v_e^2+p_e;
-        g(j,1,4)=rho_e*v_e*H_e;
+        g(j,1,1)=rho_e(j)*v_e(j);
+        g(j,1,2)=rho_e(j)*u_e(j)*v_e(j);
+        g(j,1,3)=rho_e(j)*v_e(j)^2+p_e;
+        g(j,1,4)=rho_e(j)*v_e(j)*H_e(j);
         
     end
     
