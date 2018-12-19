@@ -28,17 +28,17 @@ R=287;
 M_inf=0.1;           %Upstream Mach
 a=sqrt(gamma*T_w*R); %Upstream speed of sound
 u_ups=a*M_inf; %Upstream horizontal velocity
-u_w=u_ups;
-v_w=0;
-cp=R./(gamma-1);
-cv=R*gamma./(gamma-1);
+%u_w=u_ups;
+%v_w=0;
+cp=R/(gamma-1);
+cv=R*gamma/(gamma-1);
 
-T_w_s=T_ups*(1 + ((gamma-1)/2)*M_inf^2);                   %Upstream stagnation T in K
-p_w_s=p_ups*(1 + ((gamma-1)/2)*M_inf^2)^(gamma/(gamma-1)); %Upstream stagnation p in Pa
+T_ups_s=T_ups*(1 + ((gamma-1)/2)*M_inf^2);                   %Upstream stagnation T in K
+p_ups_s=p_ups*(1 + ((gamma-1)/2)*M_inf^2)^(gamma/(gamma-1)); %Upstream stagnation p in Pa
 rho_ups=p_ups/(R*T_ups);                                       %Upstream density in kg/m^3
-rho_w_s=rho_wups(p_w/p_w_s)^(gamma);                       %Upstream stagnation density in kg/m^3
-E=R/(gamma-1)*T_ups + (u_w^2 + v_w^2)/2;
-H=E + p_w/rho_ups;
+rho_ups_s=rho_ups(p_ups/p_ups_s)^(gamma);                       %Upstream stagnation density in kg/m^3
+E=R/(gamma-1)*T_ups + (u_ups^2 + v_ups^2)/2;
+H=E + p_ups/rho_ups;
 
 %Prealocating variables
 rho=zeros(Ny-1,Nx-1);
@@ -51,11 +51,11 @@ E=zeros(Ny-1,Nx-1);
 
 %Initial conditions
 
-rho(:,:)=rho_w;
-p(:,:)=p_w;
-T(:,:)=T_w;
-u(:,:)=u_w;
-v(:,:)=v_w;
+rho(:,:)=rho_ups;
+p(:,:)=p_ups;
+T(:,:)=T_ups;
+u(:,:)=u_ups;
+v(:,:)=v_ups;
 E(:,:)=R/(gamma-1)*T + (u.^2 + v.^2)/2;
 
 U(:,:,1) = rho;              
@@ -63,5 +63,5 @@ U(:,:,2) = rho.*u(:,:);
 U(:,:,3) = rho.*v(:,:);    
 U(:,:,4) = rho.*E;
 ntstep=10;
-[U]=RungeKutta(U,ntstep,a,u,rho,p,gamma,v,dx,dy,Nx,Ny,A,R,T,Nx_E,Ny_E,Nx_W,Nx_S,Ny_w,Ny_S,Nx_N,Ny_N,T_w_s,p_w_s,rho_w_s)
+[U]=RungeKutta(U,ntstep,a,u,rho,p,gamma,v,dx,dy,Nx,Ny,A,R,T,Nx_E,Ny_E,Nx_W,Ny_W,Nx_S,Ny_S,Nx_N,Ny_N,T_ups_s,p_ups_s,rho_ups_s)
 
