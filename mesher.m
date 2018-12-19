@@ -3,7 +3,7 @@ function [x,y,y0,dx,dy]=mesher(L,Nx,Ny)
 
 
 dx=3*L/(Nx-1);
-x=0:dx:3*L;
+Lx=0:dx:3*L;
 R=(1.3)*L;
 xarc=L:dx:L*2;
 yarc=sqrt(R^2 - (xarc-1.5*L).^2) - 1.2*L;
@@ -17,9 +17,8 @@ for i=1:Nx
 end
 
 for i=1:Ny
-    
-   xmatrix(i,:)=x; 
+   x(i,:)=Lx; 
 end
 figure;hold on;
-surf(xmatrix,y,xmatrix.*0);
+surf(x,y,x.*0);
 end
