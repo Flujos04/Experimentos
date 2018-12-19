@@ -1,5 +1,4 @@
-function [D,D_north,D_west,D_east,D_south] = artificial_dissipation (k4,k2,u,v,gamma,P,rho,Nx,Ny,X,Y)
-function [D,D_north,D_west,D_east,D_south] = artificial_dissipation_v2 (U,k4,k2,u,v,gamma,P,rho,Nx,Ny,X,Y)
+function [D,D_north,D_west,D_east,D_south] = artificial_dissipation (U,k4,k2,u,v,gamma,P,rho,Nx,Ny,X,Y)
 
 %  Definition of cell normals and geometry
 dSy_east = zeros(Ny-1,Nx-1); dSx_east = zeros(Ny-1,Nx-1);
@@ -31,6 +30,7 @@ for j = 1:Ny-1
         gamma_west(j,i+1) = 0.5*k4*(u(j,i+1)*dSy_west(j,i+1)+v(j,i+1)*dSx_west(j,i+1)+c_west*norm_west);       
     end
 end
+        gamma_west(:,1) = 0.5*k4*(u(:,2).*dSy_west(:,2)+v(:,2).*dSx_west(:,2)+c_west*norm_west);
         gamma_east(:,i+1) = 0.5*k4*(u(:,i+1).*dSy_east(:,i+1)+v(:,i+1).*dSx_east(:,i+1)+c_east*norm_east);
         
 %Loop to create the gamma artificial dissipation term for the G vertical flux
@@ -44,6 +44,7 @@ for j = 1:Ny-2
         gamma_south(j+1,i) = 0.5*k4*(u(j+1,i)*dSy_south(j+1,i)+v(j+1,i)*dSx_south(j+1,i)+c_south*norm_south);        
     end
 end
+        gamma_south(1,:) = 0.5*k4*(u(2,:).*dSy_south(2,:)+v(2,:).*dSx_south(2,:)+c_south*norm_south); 
         gamma_north(j+1,:) = 0.5*k4*(u(j+1,:).*dSy_north(j+1,:)+v(j+1,:).*dSx_north(j+1,:)+c_north*norm_north);
         
 %Pressure gradients
@@ -74,7 +75,7 @@ for j = 1:Ny-1
         eta_west(j,i+1) = 0.5*k2*(u(j,i+1)*dSy_west(j,i+1)+v(j,i+1)*dSx_west(j,i+1)+c_west*norm_west)*max([Nux(j,i+1),Nux(j,i),Nux(j,i-1)]);        
     end
 end
-        eta_east(:,1) = eta_east(:,2);
+        eta_west(:,1) = eta_west(:,2);
         eta_east(:,i+1) = eta_east(:,i);
         
 %Loop to create the eta artificial dissipation term for the G vertical flux
@@ -88,7 +89,7 @@ for j = 2:Ny-2
         eta_south(j+1,i) = 0.5*k2*(u(j+1,i)*dSy_south(j+1,i)+v(j+1,i)*dSx_south(j+1,i)+c_south*norm_south)*max([Nuy(j+1,i),Nuy(j,i),Nuy(j-1,i)]);        
     end
 end
-        eta_north(1,:) = eta_north(2,:);
+        eta_south(1,:) = eta_south(2,:);
         eta_north(j+1,:) = eta_north(j,:);
 
 for j = 1:Ny-1
