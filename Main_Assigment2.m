@@ -47,6 +47,7 @@ T=zeros(Ny-1,Nx-1);
 u=zeros(Ny-1,Nx-1);
 v=zeros(Ny-1,Nx-1);
 E=zeros(Ny-1,Nx-1);
+H=zeros(Ny-1,Nx-1);
 
 
 %Initial conditions
@@ -65,4 +66,55 @@ U(:,:,3) = rho.*v(:,:);
 U(:,:,4) = rho.*E;
 ntstep=10;
 
-[U]=RungeKutta(U,ntstep,x,y,H,a,M_inf,u,rho,p,gamma,v,dx,dy,Nx,Ny,A,R,T,u_ups,v_ups,p_ups,Nx_E,Ny_E,Nx_W,Ny_W,Nx_S,Ny_S,Nx_N,Ny_N,cp,cv,T_ups_s,p_ups_s);
+[U,u,v,rho,E,p,H,T]=RungeKutta(U,ntstep,x,y,H,a,M_inf,u,rho,p,gamma,v,dx,dy,Nx,Ny,A,R,T,u_ups,v_ups,p_ups,Nx_E,Ny_E,Nx_W,Ny_W,Nx_S,Ny_S,Nx_N,Ny_N,cp,cv,T_ups_s,p_ups_s);
+
+
+figure()
+contourf(x_center, y_center, v(:,:))
+co=colorbar;
+colormap(jet)
+title('Vertical velocity v')
+view(2)
+
+figure()
+contourf(x_center, y_center, u(:,:))
+co=colorbar;
+colormap(jet)
+title('Horizontal velocity u')
+view(2)
+
+figure()
+contourf(x_center, y_center, rho(:,:))
+co=colorbar;
+colormap(jet)
+title('Density')
+view(2)
+
+figure()
+contourf(x_center, y_center, E(:,:))
+co=colorbar;
+colormap(jet)
+title('Entropy')
+view(2)
+
+figure()
+contourf(x_center, y_center, p(:,:))
+co=colorbar;
+colormap(jet)
+title('Pressure')
+view(2)
+
+figure()
+contourf(x_center, y_center, H(:,:))
+co=colorbar;
+colormap(jet)
+title('Enthalpy')
+view(2)
+
+figure()
+contourf(x_center, y_center, T(:,:))
+co=colorbar;
+colormap(jet)
+title('Temperature')
+view(2)
+
