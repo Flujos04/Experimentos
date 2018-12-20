@@ -32,7 +32,7 @@ FE = zeros((Ny-1),(Nx-1),4);
 FS = zeros((Ny-1),(Nx-1),4);
     %Boundary
         j=1;
-        FN(j,:,:)=f(j,:,:).*Nx_S(j,:)+g(j,:,:).*Ny_S(j,:)-D_south(j,:,:);
+        FS(j,:,:)=f(j,:,:).*Nx_S(j,:)+g(j,:,:).*Ny_S(j,:)-D_south(j,:,:);
                 
     %Rest        
         for i=1:(Nx-1)
