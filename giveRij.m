@@ -1,15 +1,15 @@
 function [Rij,FN,FE,FS,FW,f,g]=giveRij(U,x,y,H,p,T,rho,u,v,p_ups,gamma,R,M_inf,a,u_ups,v_ups,Nx_E,Ny_E,Nx_W,Nx_S,Ny_W,Ny_S,Nx_N,Ny_N,Ny,Nx,CFL,k2,k4,cp,cv,T_ups_s,p_ups_s)
 
 %%%%% WEST CONDITIONS %%%%%
-
-T_w=T_ups_s-(gamma-1)./2.*(u_ups.^2)./(gamma*R);
-M_w=u_ups./sqrt(gamma*R*T_w);
-p_w=p_ups_s./((1+gamma-1)./(2*M_inf.^2))^(gamma/(gamma-1));
-rho_w=p_w/(R*T_w); 
-E_w=cv*T_w+(u_ups.^2 + v_ups.^2)/2;
-H_w=E_w+p_w./rho_w;
 u_w=u_ups;
 v_w=v_ups;
+T_w=T_ups_s-(gamma-1)./2.*(u_w.^2)./(gamma*R);
+M_w=u_w./sqrt(gamma*R*T_w);
+p_w=p_ups_s./(1+(gamma-1)./2*(M_w.^2))^(gamma/(gamma-1));
+rho_w=p_w/(R*T_w); 
+E_w=cv*T_w+(u_w.^2 + v_w.^2)/2;
+H_w=E_w+p_w./rho_w;
+
 
 %%%%% EAST CONDITIONS %%%%%
 
@@ -27,4 +27,3 @@ rho_e=U(:,end,1);
 Rij=FN+FE+FS+FW;
 
 end
-
