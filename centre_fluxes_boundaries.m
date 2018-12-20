@@ -1,4 +1,4 @@
-function [f,g]=centre_fluxes_boundaries(Nx,Ny,rho,ux,uy,H,p,rho_w,p_w,H_w,u_w,v_w,rho_e,p_e,H_e,u_e,v_e)
+function [f,g,dt]=centre_fluxes_boundaries(Nx,Ny,rho,ux,uy,H,p,rho_w,p_w,H_w,u_w,v_w,rho_e,p_e,H_e,u_e,v_e,a,CFL,dx,dy)
 
 %We are going to work with F and G in matrixes. Then, they will be converted to vectors for simplicity
 f = zeros((Ny-1),(Nx-1),4);
@@ -116,5 +116,14 @@ g(1,1,1)=rho(1,1)*uy(1,1);
 g(1,1,2)=rho(1,1)*ux(1,1)*uy(1,1);
 g(1,1,3)=rho(1,1)*uy(1,1)^2+p(1,1);
 g(1,1,4)=rho(1,1)*uy(1,1)*H(1,1);
+
+    u1=max(abs(ux(:,:)+a));
+    u2=max(abs(ux(:,:)-a));
+    v1=max(abs(uy(:,:)+a));
+    v2=max(abs(uy(:,:)-a));
+    umax=max([u1,u2]);
+    vmax=max([v1,v2]);
+    
+    dt=CFL/((umax/dx) +(vmax/max(dy)));
 
 end
