@@ -3,9 +3,9 @@ clc;clear;close all
 %% GRID PARAMETERS AND CONSTRUCTION %%
 
 L=1;
-n_cellsbump=10;
+n_cellsbump=30;
 Nx=3*n_cellsbump+1;
-Ny=60;
+Ny=150;
 
 [x,y,y0,dx,dy]=mesher(L,Nx,Ny);
 
@@ -25,7 +25,7 @@ T_ups=288;             %Upstream temperature in K
 v_ups=0;               %Upstream vertical velocity
 gamma=1.4;
 R=287;
-M_inf=0.1;           %Upstream Mach
+M_inf=0.3;           %Upstream Mach
 a=sqrt(gamma*T_ups*R); %Upstream speed of sound
 u_ups=a*M_inf; %Upstream horizontal velocity
 %u_w=u_ups;
@@ -64,10 +64,14 @@ U(:,:,1) = rho;
 U(:,:,2) = rho.*u(:,:); 
 U(:,:,3) = rho.*v(:,:);    
 U(:,:,4) = rho.*E;
-ntstep=10;
-
-[U,u,v,rho,E,p,H,T]=RungeKutta(U,ntstep,x,y,H,a,M_inf,u,rho,p,gamma,v,dx,dy,Nx,Ny,A,R,T,u_ups,v_ups,p_ups,Nx_E,Ny_E,Nx_W,Ny_W,Nx_S,Ny_S,Nx_N,Ny_N,cp,cv,T_ups_s,p_ups_s);
-
+%ntstep=20;
+iter=1;
+while iter<100
+tic
+[U,u,v,rho,E,p,H,T]=RungeKutta(U,iter,x,y,H,a,M_inf,u,rho,p,gamma,v,dx,dy,Nx,Ny,A,R,T,u_ups,v_ups,p_ups,Nx_E,Ny_E,Nx_W,Ny_W,Nx_S,Ny_S,Nx_N,Ny_N,cp,cv,T_ups_s,p_ups_s,rho_ups);
+iter=iter+1;
+toc
+end
 
 figure()
 contourf(x_center, y_center, v(:,:))
@@ -118,3 +122,9 @@ colormap(jet)
 title('Temperature')
 view(2)
 
+figure()
+contourf(x_center, y_center, sqrt(u(:,:).^2 +v(:,:).^2)/a)
+co=colorbar;
+colormap(jet)
+title('Temperature')
+view(2)
