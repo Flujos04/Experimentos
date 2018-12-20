@@ -9,14 +9,7 @@ for i=1:ntstep
     
 %     umax=max(abs((u(:,:)+a),abs(u(:,:)-a)));
 %     vmax=max(abs((v(:,:)+a),abs(v(:,:)-a)));
-    u1=max(abs(u(:,:)+a));
-    u2=max(abs(u(:,:)-a));
-    v1=max(abs(v(:,:)+a));
-    v2=max(abs(v(:,:)-a));
-    umax=max([u1,u2]);
-    vmax=max([v1,v2]);
-    
-    dt=CFL/((umax/dx) +(vmax/max(dy)));
+
     
     Y1=U;
     Y2=zeros(Ny-1,Nx-1,4);
@@ -27,19 +20,19 @@ for i=1:ntstep
     alpha(1,1)=0.25;alpha(1,2)=1/3;alpha(1,3)=0.5;
     alpha(2,1)=0.125;alpha(2,2)=0.306;alpha(2,3)=0.587;
     
-    [R1,FN,FE,FS,FW,f,g]=giveRij(Y1,x,y,H,p,T,rho,u,v,p_ups,gamma,R,M_inf,a,u_ups,v_ups,Nx_E,Ny_E,Nx_W,Nx_S,Ny_W,Ny_S,Nx_N,Ny_N,Ny,Nx,CFL,k2,k4,cp,cv,T_ups_s,p_ups_s);
+    [R1,FN,FE,FS,FW,f,g,dt]=giveRij(Y1,x,y,H,p,T,rho,u,v,p_ups,gamma,R,M_inf,a,u_ups,v_ups,Nx_E,Ny_E,Nx_W,Nx_S,Ny_W,Ny_S,Nx_N,Ny_N,Ny,Nx,CFL,k2,k4,cp,cv,T_ups_s,p_ups_s,dx,dy);
     
     Y2(:,:,:)=U(:,:,:)-(dt./A(:,:)).*alpha(1,1).*R1(:,:,:);
     
-    [R2,FN,FE,FS,FW,f,g]=giveRij(Y2,x,y,H,p,T,rho,u,v,p_ups,gamma,R,M_inf,a,u_ups,v_ups,Nx_E,Ny_E,Nx_W,Nx_S,Ny_W,Ny_S,Nx_N,Ny_N,Ny,Nx,CFL,k2,k4,cp,cv,T_ups_s,p_ups_s);
+    [R2,FN,FE,FS,FW,f,g,dt]=giveRij(Y2,x,y,H,p,T,rho,u,v,p_ups,gamma,R,M_inf,a,u_ups,v_ups,Nx_E,Ny_E,Nx_W,Nx_S,Ny_W,Ny_S,Nx_N,Ny_N,Ny,Nx,CFL,k2,k4,cp,cv,T_ups_s,p_ups_s,dx,dy);
     
     Y3(:,:,:)=U(:,:,:)-(dt./A(:,:)).*alpha(1,2).*R2(:,:,:);
     
-    [R3,FN,FE,FS,FW,f,g]=giveRij(Y3,x,y,H,p,T,rho,u,v,p_ups,gamma,R,M_inf,a,u_ups,v_ups,Nx_E,Ny_E,Nx_W,Nx_S,Ny_W,Ny_S,Nx_N,Ny_N,Ny,Nx,CFL,k2,k4,cp,cv,T_ups_s,p_ups_s);
+    [R3,FN,FE,FS,FW,f,g,dt]=giveRij(Y3,x,y,H,p,T,rho,u,v,p_ups,gamma,R,M_inf,a,u_ups,v_ups,Nx_E,Ny_E,Nx_W,Nx_S,Ny_W,Ny_S,Nx_N,Ny_N,Ny,Nx,CFL,k2,k4,cp,cv,T_ups_s,p_ups_s,dx,dy);
     
     Y4(:,:,:)=U(:,:,:)-(dt./A(:,:)).*alpha(1,3).*R3(:,:,:);
     
-    [R4,FN,FE,FS,FW,f,g]=giveRij(Y4,x,y,H,p,T,rho,u,v,p_ups,gamma,R,M_inf,a,u_ups,v_ups,Nx_E,Ny_E,Nx_W,Nx_S,Ny_W,Ny_S,Nx_N,Ny_N,Ny,Nx,CFL,k2,k4,cp,cv,T_ups_s,p_ups_s);
+    [R4,FN,FE,FS,FW,f,g,dt]=giveRij(Y4,x,y,H,p,T,rho,u,v,p_ups,gamma,R,M_inf,a,u_ups,v_ups,Nx_E,Ny_E,Nx_W,Nx_S,Ny_W,Ny_S,Nx_N,Ny_N,Ny,Nx,CFL,k2,k4,cp,cv,T_ups_s,p_ups_s,dx,dy);
     
     U_next(:,:,:)=U(:,:,:)-(dt./A(:,:)).*R4(:,:,:);
     
