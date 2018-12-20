@@ -43,7 +43,7 @@ for i=2:(Nx-2)
         
     end
     
-        %%%%% SOUTH CELLS %%%%%
+        %%%%% NORTH CELLS %%%%%
         f(end,i,1)=rho(end,i)*ux(end,i);
         f(end,i,2)=rho(end,i)*ux(end,i)^2+p(end,i);
         f(end,i,3)=rho(end,i)*ux(end,i)*uy(end,i);
@@ -54,7 +54,7 @@ for i=2:(Nx-2)
         g(end,i,3)=rho(end,i)*uy(end,i)^2+p(end,i);
         g(end,i,4)=rho(end,i)*uy(end,i)*H(end,i);
         
-        %%%%% NORTH CELSS %%%%%
+        %%%%% SOUTH CELLS %%%%%
         f(1,i,1)=rho(1,i)*ux(1,i);
         f(1,i,2)=rho(1,i)*ux(1,i)^2+p(1,i);
         f(1,i,3)=rho(1,i)*ux(1,i)*uy(1,i);
@@ -83,24 +83,24 @@ g(Ny-1,1,4)=rho(Ny-1,1)*uy(Ny-1,1)*H(Ny-1,1);
 
 %%%NE%%%
 
-f(Ny-1,Nx-1,Nx-1)=rho(Ny-1,Nx-1)*ux(Ny-1,Nx-1);
+f(Ny-1,Nx-1,1)=rho(Ny-1,Nx-1)*ux(Ny-1,Nx-1);
 f(Ny-1,Nx-1,2)=rho(Ny-1,Nx-1)*ux(Ny-1,Nx-1)^2+p(Ny-1,Nx-1);
 f(Ny-1,Nx-1,3)=rho(Ny-1,Nx-1)*ux(Ny-1,Nx-1)*uy(Ny-1,Nx-1);
 f(Ny-1,Nx-1,4)=rho(Ny-1,Nx-1)*ux(Ny-1,Nx-1)*H(Ny-1,Nx-1);
         
-g(Ny-1,Nx-1,Nx-1)=rho(Ny-1,Nx-1)*uy(Ny-1,Nx-1);
+g(Ny-1,Nx-1,1)=rho(Ny-1,Nx-1)*uy(Ny-1,Nx-1);
 g(Ny-1,Nx-1,2)=rho(Ny-1,Nx-1)*ux(Ny-1,Nx-1)*uy(Ny-1,Nx-1);
 g(Ny-1,Nx-1,3)=rho(Ny-1,Nx-1)*uy(Ny-1,Nx-1)^2+p(Ny-1,Nx-1);
 g(Ny-1,Nx-1,4)=rho(Ny-1,Nx-1)*uy(Ny-1,Nx-1)*H(Ny-1,Nx-1);
 
 %%%SE%%%%
 
-f(1,Nx-1,Nx-1)=rho(1,Nx-1)*ux(1,Nx-1);
+f(1,Nx-1,1)=rho(1,Nx-1)*ux(1,Nx-1);
 f(1,Nx-1,2)=rho(1,Nx-1)*ux(1,Nx-1)^2+p(1,Nx-1);
 f(1,Nx-1,3)=rho(1,Nx-1)*ux(1,Nx-1)*uy(1,Nx-1);
 f(1,Nx-1,4)=rho(1,Nx-1)*ux(1,Nx-1)*H(1,Nx-1);
         
-g(1,Nx-1,Nx-1)=rho(1,Nx-1)*uy(1,Nx-1);
+g(1,Nx-1,1)=rho(1,Nx-1)*uy(1,Nx-1);
 g(1,Nx-1,2)=rho(1,Nx-1)*ux(1,Nx-1)*uy(1,Nx-1);
 g(1,Nx-1,3)=rho(1,Nx-1)*uy(1,Nx-1)^2+p(1,Nx-1);
 g(1,Nx-1,4)=rho(1,Nx-1)*uy(1,Nx-1)*H(1,Nx-1);
