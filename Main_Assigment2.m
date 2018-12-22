@@ -3,9 +3,9 @@ clc;clear;close all
 %% GRID PARAMETERS AND CONSTRUCTION %%
 
 L=1;
-n_cellsbump=30;
+n_cellsbump=10;
 Nx=3*n_cellsbump+1;
-Ny=150;
+Ny=60;
 
 [x,y,y0,dx,dy]=mesher(L,Nx,Ny);
 
@@ -66,7 +66,7 @@ U(:,:,3) = rho.*v(:,:);
 U(:,:,4) = rho.*E;
 %ntstep=20;
 iter=1;
-while iter<100
+while iter<500
 tic
 [U,u,v,rho,E,p,H,T]=RungeKutta(U,iter,x,y,H,a,M_inf,u,rho,p,gamma,v,dx,dy,Nx,Ny,A,R,T,u_ups,v_ups,p_ups,Nx_E,Ny_E,Nx_W,Ny_W,Nx_S,Ny_S,Nx_N,Ny_N,cp,cv,T_ups_s,p_ups_s,rho_ups);
 iter=iter+1;
@@ -123,8 +123,9 @@ title('Temperature')
 view(2)
 
 figure()
-contourf(x_center, y_center, sqrt(u(:,:).^2 +v(:,:).^2)/a)
+contourf(x_center, y_center, sqrt(u(:,:).^2 +v(:,:).^2)./sqrt(gamma*R*T(:,:)))
 co=colorbar;
 colormap(jet)
-title('Temperature')
+title('Mach')
 view(2)
+
