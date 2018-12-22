@@ -70,7 +70,11 @@ end
         G_ew(j,Nx,1) = rho_outlet(j,1)*v(j,Nx-1);
         G_ew(j,Nx,2) = rho_outlet(j,1)*u_outlet(j,1)*v(j,Nx-1);
         G_ew(j,Nx,3) = rho_outlet(j,1)*v(j,Nx-1)^2+p_outlet(j,1);
+
+        G_ew(j,Nx,4) = rho_outlet(j,1)*v(j,Nx-1)*H_outlet(j,1);    
+=======
         G_ew(j,Nx,4) = rho_outlet(j,1)*v(j,Nx-1)^2*H_outlet(j,1);    
+
         %Then, G will be removed because it will be multiplied by Ny (which is 0)
     end
     
@@ -86,6 +90,7 @@ end
     for i = 1:Nx-1
         G_sn(Ny,i,3) = p(Ny-1,i);
     end
+
 
 
 FN = zeros((Ny-1),(Nx-1),4);
